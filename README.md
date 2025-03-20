@@ -30,7 +30,7 @@ L'application repose sur une **architecture microservices** avec FastAPI et Post
 ## Installation
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/votre-repo/receipt-scanner-app.git
+   git clone https://github.com/morningstar-47/receipt-scanner-app.git
    cd receipt-scanner-app
    ```
 2. **Démarrer les services avec Docker**
