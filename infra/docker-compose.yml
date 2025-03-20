@@ -1,0 +1,73 @@
+# Docker Compose pour orchestrer les services
+version: "3.8"
+
+services:
+  api_gateway:
+    build: ./services/api_gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth_service
+      - receipt_service
+    environment:
+      - AUTH_SERVICE_URL=http://auth_service:8001
+      - RECEIPT_SERVICE_URL=http://receipt_service:8002
+
+  auth_service:
+    build: ./services/auth_service
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db/auth_db
+    depends_on:
+      - db
+
+  receipt_service:
+    build: ./services/receipt_service
+    ports:
+      - "8002:8002"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db/receipt_db
+      - OCR_SERVICE_URL=http://ocr_service:8003
+    depends_on:
+      - db
+      - ocr_service
+
+  ocr_service:
+    build: ./services/ocr_service
+    ports:
+      - "8003:8003"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  loyalty_service:
+    build: ./services/loyalty_service
+    ports:
+      - "8004:8004"
+    depends_on:
+      - db
+
+  notification_service:
+    build: ./services/notification_service
+    ports:
+      - "8005:8005"
+    depends_on:
+      - redis
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
