@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-multipart
+mistralai  # Remplacez par la version correcte de mistralai si nécessaire
+jose
+passlib
