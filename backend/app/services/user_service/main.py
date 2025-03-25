@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.auth import get_password_hash, authenticate_user, create_access_token
+from app.services.auth_service.main import get_password_hash, authenticate_user, create_access_token
 from app.models import User
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta

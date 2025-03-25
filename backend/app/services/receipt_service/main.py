@@ -1,10 +1,11 @@
+# services/receipt_service/main.py
 from fastapi import APIRouter, File, UploadFile, Depends, HTTPException, Body
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Ticket, User, Product
-from app.auth import get_current_user
-from app.services import ocr
+from app.services.auth_service.main import get_current_user
+from app.services.ocr_service import main as ocr
 import json
 import hashlib
 import tempfile

@@ -1,5 +1,9 @@
 from fastapi import FastAPI
-from app.routes import user, ticket, brand
+from app.services.user_service import main as user
+from app.services.receipt_service import main as ticket
+from app.services.brand_service import main as brand
+# from app.services.api_gateway import main as getway
+from app.services.brand_service import main as brand
 
 from app.database import engine, Base
 
@@ -14,5 +18,5 @@ app.include_router(ticket.router, prefix="/tickets", tags=["tickets"])
 app.include_router(brand.router, prefix="/brands", tags=["brands"])
 
 @app.get("/")
-def root():
+def root(): 
     return {"message": "API de gestion des tickets et des utilisateurs"}
